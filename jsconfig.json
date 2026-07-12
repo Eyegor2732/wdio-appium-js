@@ -1,0 +1,21 @@
+{
+    "compilerOptions": {
+      "paths": {
+      "#androidScreens/*": ["./test/screenobjects/android/*"],
+      "#iosScreens/*": ["./test/screenobjects/ios/*"],
+          "@androidScreens/*": ["./test/screenobjects/android/*"],
+          "@iosScreens/*": ["./test/screenobjects/ios/*"]
+      },
+      "types": [
+          "node",
+          "@wdio/globals/types",
+          "@wdio/mocha-framework"
+      ],
+      "module": "ESNext",
+      "allowJs": true,
+      "esModuleInterop": true
+    },
+  "exclude": [
+    "node_modules"
+  ]
+}

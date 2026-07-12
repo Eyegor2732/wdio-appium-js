@@ -1,0 +1,48 @@
+import path from 'path';
+import { config as baseConfig } from './wdio.conf.js';
+
+// Android-focused config that keeps base defaults but makes mobile settings explicit.
+const config = {
+  ...baseConfig,
+  // Keep WDIO host and Appium service address identical to avoid connection mismatches.
+  hostname: '127.0.0.1',
+  maxInstances: 1,
+  specs: ['./test/specs/android/*.js'],
+  capabilities: [
+    {
+      'appium:platformName': 'Android',
+      'appium:deviceName': 'Medium Phone API 35',
+      'appium:platformVersion': '15.0',
+      'appium:automationName': 'UiAutomator2',
+      'appium:app': path.join(process.cwd(), 'app/android/ColorNote+Notepad.apk'),
+      'appium:uiautomator2ServerLaunchTimeout': 120000,
+      'appium:adbExecTimeout': 120000,
+      'appium:androidInstallTimeout': 180000,
+      'appium:autoGrantPermissions': true,
+      'appium:chromedriverAutodownload': true,
+      'appium:chromedriverExecutable': path.join(process.cwd(), 'node_modules/chromedriver/lib/chromedriver/chromedriver'),
+      'appium:ensureWebviewsHavePages': true,
+      'appium:nativeWebScreenshot': true,
+      'appium:webviewContext': true
+    }
+  ],
+  services: [
+    [
+      'appium',
+      {
+        args: {
+          // Must match `hostname` above.
+          address: '127.0.0.1',
+          port: 4723,
+          relaxedSecurity: true
+        },
+        logPath: './appium-logs'
+      }
+    ]
+  ],
+  //
+  groupLogsByTestSpec: true,
+  // 
+};
+
+export { config };
