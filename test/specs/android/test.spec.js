@@ -4,14 +4,16 @@ describe('test', () => {
     await driver.pause(3000);
   });
 
-  it('should read SMS directly from Android database via ADB', async () => {
-    // Queries the content provider for the body of the last received message
-    const adbCommand = 'content query --uri content://sms/inbox --projection body --sort "date DESC" --limit 1';
+  it('should read SMS directly from Android database via ADB safely', async () => {
+    // Append the SQL LIMIT clause inside the sort parameter string
+    const adbCommand = 'content query --uri content://sms/inbox --projection body --sort "date DESC LIMIT 1"';
 
     const result = await browser.execute('mobile: shell', {
       command: adbCommand
     });
 
+    console.log('----------------------------------------');
     console.log('ADB SMS Output:', result);
+    console.log('----------------------------------------');
   });
 });
