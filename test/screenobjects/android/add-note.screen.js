@@ -1,4 +1,13 @@
 class AddNoteScreen {
+  async isElementDisplayed(element, timeout = 2000) {
+    try {
+      await element.waitForDisplayed({ timeout });
+      return true;
+    } catch {
+      return false;
+    }
+  }
+
   get skipBtn() {
     return $('//*[@resource-id="com.socialnmobile.dictapps.notepad.color.note:id/btn_start_skip"]');
   }
@@ -33,6 +42,10 @@ class AddNoteScreen {
 
   get noteTitle() {
     return $('//*[@resource-id="com.socialnmobile.dictapps.notepad.color.note:id/title"]');
+  }
+
+  noteTitleByText(title) {
+    return $(`//*[@resource-id="com.socialnmobile.dictapps.notepad.color.note:id/title" and @text="${title}"]`);
   }
 
   get backButton() {
@@ -71,6 +84,10 @@ class AddNoteScreen {
     return $('//*[@resource-id="com.socialnmobile.dictapps.notepad.color.note:id/title"]');
   }
 
+  trashItemTitleByText(title) {
+    return $(`//*[@resource-id="com.socialnmobile.dictapps.notepad.color.note:id/title" and @text="${title}"]`);
+  }
+
   get likeFacebookBtn() {
     return $('//*[@text="Like us on Facebook"]');
   }
@@ -78,6 +95,35 @@ class AddNoteScreen {
   async saveNote() {
     await this.backButton.click();
     await this.backButton.click();
+  }
+
+  async deleteCurrentNote() {
+    await this.menuBtn.waitForDisplayed({ timeout: 10000 });
+    await this.menuBtn.click();
+
+    await this.deleteOption.waitForDisplayed({ timeout: 10000 });
+    await this.deleteOption.click();
+
+    await this.deleteOkBtn.waitForDisplayed({ timeout: 10000 });
+    await this.deleteOkBtn.click();
+
+    await this.addNoteTxt.waitForDisplayed({ timeout: 10000 });
+  }
+
+  async skipTutorialIfPresent() {
+    if (await this.isElementDisplayed(this.skipBtn, 5000)) {
+      await this.skipBtn.click();
+    }
+  }
+
+  async openTextNoteEditor() {
+    if (await this.isElementDisplayed(this.addNoteTxt, 10000)) {
+      await this.addNoteTxt.click();
+    }
+
+    if (await this.isElementDisplayed(this.textOption, 3000)) {
+      await this.textOption.click();
+    }
   }
 }
 

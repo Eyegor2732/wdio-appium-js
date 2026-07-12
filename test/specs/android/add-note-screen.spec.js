@@ -5,14 +5,22 @@ describe('Add Notes', () => {
   const noteBody = "Naruto\nOnePiece\nAOT";
 
   it('Skip tutorial', async () => {
-    await AddNoteScreen.skipBtn.click();
+    await AddNoteScreen.skipTutorialIfPresent();
 
     await expect(AddNoteScreen.addNoteTxt).toBeDisplayed();
   });
 
   it('add a note, save changes & verify note', async () => {
-    await AddNoteScreen.addNoteTxt.click();
-    await AddNoteScreen.textOption.click();
+    await AddNoteScreen.skipTutorialIfPresent();
+
+    // Keep reruns stable by removing a pre-existing note with the same title.
+    const existingNote = AddNoteScreen.noteTitleByText(noteTitle);
+    if (await AddNoteScreen.isElementDisplayed(existingNote, 3000)) {
+      await existingNote.click();
+      await AddNoteScreen.deleteCurrentNote();
+    }
+
+    await AddNoteScreen.openTextNoteEditor();
     await expect(AddNoteScreen.textEditing).toBeDisplayed();
 
     // add note title
@@ -25,10 +33,10 @@ describe('Add Notes', () => {
     await AddNoteScreen.saveNote();
 
     // assertion
-    await expect(AddNoteScreen.noteTitle).toHaveText(noteTitle);
+    await expect(AddNoteScreen.noteTitleByText(noteTitle)).toBeDisplayed();
 
     // click on note title to view the note
-    await AddNoteScreen.noteTitle.click();
+    await AddNoteScreen.noteTitleByText(noteTitle).click();
 
     // assertion
     await expect(AddNoteScreen.editBtn).toBeDisplayed();
@@ -36,6 +44,12 @@ describe('Add Notes', () => {
   });
 
   it('Delete a note', async () => {
+    if (!(await AddNoteScreen.isElementDisplayed(AddNoteScreen.menuBtn, 3000))) {
+      if (await AddNoteScreen.isElementDisplayed(AddNoteScreen.noteTitleByText(noteTitle), 5000)) {
+        await AddNoteScreen.noteTitleByText(noteTitle).click();
+      }
+    }
+
     await expect(AddNoteScreen.menuBtn).toBeDisplayed();
     await AddNoteScreen.menuBtn.click();
 
@@ -49,7 +63,7 @@ describe('Add Notes', () => {
     await AddNoteScreen.deleteOkBtn.click();
 
     await expect(AddNoteScreen.addNoteTxt).toBeDisplayed();
-    await expect(AddNoteScreen.noteTitle).not.toBeDisplayed();
+    await expect(AddNoteScreen.noteTitleByText(noteTitle)).not.toBeDisplayed();
     await expect(AddNoteScreen.iconNavBtn).toBeDisplayed();
     await AddNoteScreen.iconNavBtn.click();
 
@@ -57,6 +71,6 @@ describe('Add Notes', () => {
     await AddNoteScreen.trashCanOption.click();
 
     await expect(AddNoteScreen.mainTitle).toHaveText("Trash Can");
-    await expect(AddNoteScreen.trashItemTitle).toHaveText(noteTitle);
+    await expect(AddNoteScreen.trashItemTitleByText(noteTitle)).toBeDisplayed();
   });
 });
