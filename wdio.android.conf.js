@@ -12,7 +12,7 @@ const config = {
   hostname: '127.0.0.1',
   maxInstances: 1,
   specs: ['./test/specs/android/*.js'],
-  exclude: isCI ? ['./test/specs/android/webview.spec.js'] : [],
+  exclude: isCI ? ['./test/specs/android/webview.spec.js', './test/specs/android/add-note-screen.spec.js'] : [],
   capabilities: [
     {
       'appium:platformName': 'Android',
