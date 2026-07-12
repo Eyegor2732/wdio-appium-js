@@ -1,0 +1,48 @@
+name: Android WDIO Tests
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  android-tests:
+    name: Run Android E2E
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Appium UiAutomator2 driver
+        run: npx appium driver install uiautomator2
+
+      - name: Run WDIO Android tests on emulator
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 35
+          target: google_apis
+          arch: x86_64
+          profile: pixel_7
+          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim
+          disable-animations: true
+          script: npm run test:ci
+
+      - name: Upload Appium logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: appium-logs
+          path: appium-logs/
+          if-no-files-found: ignore
