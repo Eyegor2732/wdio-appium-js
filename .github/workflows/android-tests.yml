@@ -19,14 +19,14 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
           cache: npm
 
       - name: Install dependencies
         run: npm ci
 
-      - name: Install Appium UiAutomator2 driver
-        run: npx appium driver install uiautomator2
+      - name: Verify Appium drivers
+        run: npx appium driver list --installed
 
       - name: Run WDIO Android tests on emulator
         uses: reactivecircus/android-emulator-runner@v2
