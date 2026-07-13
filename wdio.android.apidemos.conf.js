@@ -9,12 +9,7 @@ const config = {
   ...baseConfig,
   hostname: '127.0.0.1',
   maxInstances: 1,
-  specs: [
-    [
-      './test/specs/android-findElements.spec.js',
-      './test/specs/android-native.spec.js'
-    ]
-  ],
+  specs: ['./test/specs/apidemos/*.js'],
   capabilities: [
     {
       'appium:platformName': 'Android',

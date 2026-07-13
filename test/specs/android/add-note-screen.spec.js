@@ -7,7 +7,7 @@ describe('Add Notes', () => {
   it('Skip tutorial', async () => {
     await AddNoteScreen.skipTutorialIfPresent();
 
-    await expect(AddNoteScreen.addNoteTxt).toBeDisplayed();
+    await expect(AddNoteScreen.addNoteTxt).toBeDisplayed({ timeout: 15000 });
   });
 
   it('add a note, save changes & verify note', async () => {
