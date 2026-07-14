@@ -111,8 +111,10 @@ class AddNoteScreen {
   }
 
   async skipTutorialIfPresent() {
-    if (await this.isElementDisplayed(this.skipBtn, 5000)) {
+    if (await this.isElementDisplayed(this.skipBtn, 12000)) {
       await this.skipBtn.click();
+      // Wait for home screen to appear after dismissing tutorial.
+      await this.isElementDisplayed(this.addNoteTxt, 10000);
     }
   }
 

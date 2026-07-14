@@ -48,6 +48,7 @@ describe('Android Native Festure Test', () => {
   it('Working with Dialog Boxes', async () => {
     // start the activity directly
     await driver.startActivity('io.appium.android.apis', '.app.AlertDialogSamples');
+    await driver.pause(3000);
 
     // assertion
     const okCancelDialogWithMessageOption = driver.$('~OK Cancel dialog with a message');
@@ -135,7 +136,7 @@ describe('Android Native Festure Test', () => {
       throw error;
     }
 
-    driver.pause(2000);
+    await driver.pause(2000);
 
     try {
       await $('android=new UiScrollable(new UiSelector().scrollable(true)).setAsHorizontalList().scrollBackward()');
@@ -144,7 +145,7 @@ describe('Android Native Festure Test', () => {
       throw error;
     }
 
-    driver.pause(2000);
+    await driver.pause(2000);
 
     // scroll horizontally to the end of the gallery
     try {
@@ -153,7 +154,7 @@ describe('Android Native Festure Test', () => {
       console.error('Failed to scroll horizontally to the end of the gallery:', error.message);
       throw error;
     }
-    driver.pause(2000);
+    await driver.pause(2000);
 
     // // Scroll horizontally to find the "Earth" option
     // try {
@@ -166,10 +167,10 @@ describe('Android Native Festure Test', () => {
     // driver.pause(2000);
   });
 
-  it.only('Exercise Dialog Boxes', async () => {
+  it('Exercise Dialog Boxes', async () => {
     // start the activity directly
     await driver.startActivity('io.appium.android.apis', '.view.DateWidgets1');
-    driver.pause(2000);
+    await driver.pause(2000);
 
     // assertion
     const dateDisplay = driver.$('//*[@resource-id="io.appium.android.apis:id/dateDisplay"]');

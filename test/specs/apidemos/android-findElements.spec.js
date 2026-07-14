@@ -1,12 +1,15 @@
 // io.appium.android.apis/.ApiDemos
 
 describe('Android Elements Test', () => {
-  // let depth = 0;
+  const appPackage = 'io.appium.android.apis';
+
+  beforeEach(async () => {
+    // Always relaunch to ApiDemos home before each test so CI state is deterministic.
+    await driver.startActivity(appPackage, '.ApiDemos');
+    await driver.$('~App').waitForExist({ timeout: 20000 });
+  });
 
   afterEach(async () => {
-    // driver.pressKeyCode(4); // Android Back Button
-    // while (depth-- > 0) await driver.back();
-    // depth = 0;
     await driver.relaunchActiveApp();
   });
 
