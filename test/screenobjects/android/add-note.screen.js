@@ -111,10 +111,21 @@ class AddNoteScreen {
   }
 
   async skipTutorialIfPresent() {
-    if (await this.isElementDisplayed(this.skipBtn, 12000)) {
+    // Wait for either the tutorial skip button or the home screen — whichever appears first.
+    // On CI cold-launch the app can take >12s to render any UI, so we poll both simultaneously.
+    try {
+      await driver.waitUntil(
+        async () => (await this.skipBtn.isExisting()) || (await this.addNoteTxt.isExisting()),
+        { timeout: 30000, interval: 500 }
+      );
+    } catch {
+      // Neither appeared in 30s; fall through so the assertion in the test gives a clear failure.
+    }
+
+    if (await this.skipBtn.isExisting()) {
       await this.skipBtn.click();
-      // Wait for home screen to appear after dismissing tutorial.
-      await this.isElementDisplayed(this.addNoteTxt, 10000);
+      // Wait for the home screen after dismissing the tutorial.
+      await this.addNoteTxt.waitForDisplayed({ timeout: 20000 });
     }
   }
 
