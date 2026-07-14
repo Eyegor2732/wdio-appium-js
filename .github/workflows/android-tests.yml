@@ -42,7 +42,7 @@ jobs:
           arch: x86_64
           profile: pixel_5
           disable-linux-hw-accel: false
-          cores: 2
+          cores: 1
           emulator-boot-timeout: 900
           emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -no-snapshot -no-snapshot-save -no-metrics
           disable-animations: true
@@ -90,7 +90,7 @@ jobs:
           arch: x86_64
           profile: pixel_5
           disable-linux-hw-accel: false
-          cores: 2
+          cores: 1
           emulator-boot-timeout: 900
           emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -no-snapshot -no-snapshot-save -no-metrics
           disable-animations: true
