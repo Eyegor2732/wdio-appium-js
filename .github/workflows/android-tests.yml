@@ -9,7 +9,7 @@ on:
 jobs:
   android-tests:
     name: Run Android E2E
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest-4-cores
     timeout-minutes: 45
 
     steps:
@@ -58,7 +58,7 @@ jobs:
 
   android-apidemos-tests:
     name: Run Android ApiDemos E2E
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest-4-cores
     timeout-minutes: 45
 
     steps:
