@@ -9,7 +9,7 @@ on:
 jobs:
   android-tests:
     name: Run Android E2E
-    runs-on: ubuntu-latest-4-cores
+    runs-on: ubuntu-latest
     timeout-minutes: 45
 
     steps:
@@ -38,11 +38,11 @@ jobs:
         uses: reactivecircus/android-emulator-runner@v2
         with:
           api-level: 34
-          target: google_apis
+          target: google_atd
           arch: x86_64
-          profile: pixel_7
+          profile: pixel_5
           disable-linux-hw-accel: false
-          cores: 1
+          cores: 2
           emulator-boot-timeout: 900
           emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -no-snapshot -no-snapshot-save -no-metrics
           disable-animations: true
@@ -58,7 +58,7 @@ jobs:
 
   android-apidemos-tests:
     name: Run Android ApiDemos E2E
-    runs-on: ubuntu-latest-4-cores
+    runs-on: ubuntu-latest
     timeout-minutes: 45
 
     steps:
@@ -86,11 +86,11 @@ jobs:
         uses: reactivecircus/android-emulator-runner@v2
         with:
           api-level: 34
-          target: google_apis
+          target: google_atd
           arch: x86_64
-          profile: pixel_7
+          profile: pixel_5
           disable-linux-hw-accel: false
-          cores: 1
+          cores: 2
           emulator-boot-timeout: 900
           emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -no-snapshot -no-snapshot-save -no-metrics
           disable-animations: true
