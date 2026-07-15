@@ -123,16 +123,35 @@ class AddNoteScreen {
     await this.addNoteTxt.waitForDisplayed({ timeout: 10000 });
   }
 
+  async dismissAnrIfPresent() {
+    // On CI emulators the "System UI not responding" ANR dialog can appear on top
+    // of the app. The dialog has a "Wait" button — click it to dismiss.
+    try {
+      const waitBtn = await $('//*[@resource-id="android:id/aerr_wait" or @text="Wait"]');
+      if (await waitBtn.isExisting()) {
+        await waitBtn.click();
+        // Give the system a moment to recover after dismissing the dialog.
+        await driver.pause(2000);
+      }
+    } catch {
+      // No ANR dialog present — nothing to do.
+    }
+  }
+
   async skipTutorialIfPresent() {
     // Wait for either the tutorial skip button or the home screen — whichever appears first.
     // On CI cold-launch the app can take >12s to render any UI, so we poll both simultaneously.
+    // Also dismiss any ANR dialogs that may be blocking the UI on each poll iteration.
     try {
       await driver.waitUntil(
-        async () => (await this.skipBtn.isExisting()) || (await this.addNoteTxt.isExisting()),
-        { timeout: 30000, interval: 500 }
+        async () => {
+          await this.dismissAnrIfPresent();
+          return (await this.skipBtn.isExisting()) || (await this.addNoteTxt.isExisting());
+        },
+        { timeout: 60000, interval: 1000 }
       );
     } catch {
-      // Neither appeared in 30s; fall through so the assertion in the test gives a clear failure.
+      // Neither appeared in 60s; fall through so the assertion in the test gives a clear failure.
     }
 
     if (await this.skipBtn.isExisting()) {

@@ -46,7 +46,23 @@ const config = {
   ],
   //
   groupLogsByTestSpec: true,
-  // 
+
+  before: async function () {
+    // On CI emulators, a "System UI not responding" ANR dialog can appear
+    // immediately after launch. Dismiss it via ADB before any test runs.
+    const isCI = process.env.CI === 'true' || process.env.CI === '1';
+    if (isCI) {
+      try {
+        await driver.execute('mobile: shell', {
+          command: 'am broadcast -a android.intent.action.CLOSE_SYSTEM_DIALOGS'
+        });
+      } catch {
+        // Non-fatal — adb broadcast may not be available in all configurations.
+      }
+      await driver.pause(2000);
+    }
+  },
+  //
 };
 
 export { config };
