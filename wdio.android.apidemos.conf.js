@@ -34,7 +34,7 @@ const config = {
       {
         args: {
           address: '127.0.0.1',
-          port: 4723,
+          port: 4724,
           relaxedSecurity: true
         },
         logPath: './appium-logs'
