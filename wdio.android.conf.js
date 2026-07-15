@@ -12,7 +12,6 @@ const config = {
   hostname: '127.0.0.1',
   maxInstances: 1,
   specs: ['./test/specs/android/*.js'],
-  exclude: isCI ? ['./test/specs/android/webview.spec.js'] : [],
   capabilities: [
     {
       'appium:platformName': 'Android',
@@ -27,7 +26,7 @@ const config = {
       'appium:chromedriverAutodownload': true,
       'appium:chromedriverExecutable': path.join(process.cwd(), 'node_modules/chromedriver/lib/chromedriver/chromedriver'),
       'appium:ensureWebviewsHavePages': true,
-      'appium:nativeWebScreenshot': true,
+      'appium:nativeWebScreenshot': false,
       'appium:webviewContext': false
     }
   ],
