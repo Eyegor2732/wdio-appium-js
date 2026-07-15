@@ -58,6 +58,26 @@ class AddNoteScreen {
     await driver.back();
   }
 
+  // Navigates back one screen, handling the soft keyboard correctly.
+  // On CI the keyboard stays open after text input — driver.back() would only
+  // dismiss the keyboard, not navigate. So we hide the keyboard explicitly first,
+  // then use the in-app back_btn if visible, falling back to driver.back().
+  async navigateBack() {
+    try {
+      await driver.hideKeyboard();
+    } catch {
+      // Keyboard wasn't showing — safe to ignore.
+    }
+
+    // Prefer the in-app back button when visible — it's the most reliable way
+    // to trigger ColorNote's save-and-exit flow.
+    if (await this.backButton.isExisting()) {
+      await this.backButton.click();
+    } else {
+      await driver.back();
+    }
+  }
+
   get menuBtn() {
     return $('~More') // Accessibility ID;
   }
@@ -99,15 +119,13 @@ class AddNoteScreen {
   }
 
   async saveNote() {
-    // First back: exits the note editor and lands on the read-only note view.
-    // Wait for view_note to confirm the transition completed before pressing back
-    // again — on CI the emulator is slow and firing both backs immediately causes
-    // the second one to get lost mid-transition.
-    await this.pressBack();
-    await this.viewNote.waitForDisplayed({ timeout: 15000 });
+    // First navigate back: hides keyboard if open, then exits the editor.
+    // Lands on the read-only note view — wait for it before continuing.
+    await this.navigateBack();
+    await this.viewNote.waitForDisplayed({ timeout: 20000 });
 
-    // Second back: exits the note view and returns to the home list.
-    await this.pressBack();
+    // Second navigate back: exits the note view and returns to the home list.
+    await this.navigateBack();
   }
 
   async deleteCurrentNote() {
