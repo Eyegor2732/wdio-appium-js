@@ -46,9 +46,7 @@ jobs:
           emulator-boot-timeout: 120
           emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -no-snapshot -no-snapshot-save -no-metrics
           disable-animations: true
-          script: |
-            adb uninstall com.socialnmobile.dictapps.notepad.color.note || true
-            npm run test:ci
+          script: npm run test:ci
 
       - name: Upload Appium logs
         if: always()
