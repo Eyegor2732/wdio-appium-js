@@ -99,10 +99,14 @@ class AddNoteScreen {
   }
 
   async saveNote() {
-    // Press back twice: first exits the note body editor, second exits the note
-    // view and returns to the home list. Uses the system back command so it works
-    // regardless of whether the in-app back_btn element is rendered.
+    // First back: exits the note editor and lands on the read-only note view.
+    // Wait for view_note to confirm the transition completed before pressing back
+    // again — on CI the emulator is slow and firing both backs immediately causes
+    // the second one to get lost mid-transition.
     await this.pressBack();
+    await this.viewNote.waitForDisplayed({ timeout: 15000 });
+
+    // Second back: exits the note view and returns to the home list.
     await this.pressBack();
   }
 
