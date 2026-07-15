@@ -40,7 +40,7 @@ jobs:
           api-level: 35
           target: google_apis
           arch: x86_64
-          profile: pixel_5
+          profile: pixel_7
           disable-linux-hw-accel: false
           cores: 2
           emulator-boot-timeout: 300
@@ -98,7 +98,7 @@ jobs:
           api-level: 35
           target: google_apis
           arch: x86_64
-          profile: pixel_5
+          profile: pixel_7
           disable-linux-hw-accel: false
           cores: 2
           emulator-boot-timeout: 300
