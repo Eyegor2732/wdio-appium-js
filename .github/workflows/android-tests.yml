@@ -43,7 +43,7 @@ jobs:
           profile: pixel_5
           disable-linux-hw-accel: false
           cores: 1
-          emulator-boot-timeout: 120
+          emulator-boot-timeout: 300
           emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -no-snapshot -no-snapshot-save -no-metrics
           disable-animations: true
           script: npm run test:ci
@@ -91,7 +91,7 @@ jobs:
           profile: pixel_5
           disable-linux-hw-accel: false
           cores: 1
-          emulator-boot-timeout: 120
+          emulator-boot-timeout: 300
           emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -no-snapshot -no-snapshot-save -no-metrics
           disable-animations: true
           script: CI=1 npm run wdio:apidemos

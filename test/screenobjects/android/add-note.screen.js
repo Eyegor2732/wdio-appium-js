@@ -52,6 +52,12 @@ class AddNoteScreen {
     return $('//*[@resource-id="com.socialnmobile.dictapps.notepad.color.note:id/back_btn"]');
   }
 
+  // Presses the system back button, which works even when the in-app back_btn
+  // is not rendered (e.g. on API 34 emulators in CI).
+  async pressBack() {
+    await driver.back();
+  }
+
   get menuBtn() {
     return $('~More') // Accessibility ID;
   }
@@ -93,8 +99,11 @@ class AddNoteScreen {
   }
 
   async saveNote() {
-    await this.backButton.click();
-    await this.backButton.click();
+    // Press back twice: first exits the note body editor, second exits the note
+    // view and returns to the home list. Uses the system back command so it works
+    // regardless of whether the in-app back_btn element is rendered.
+    await this.pressBack();
+    await this.pressBack();
   }
 
   async deleteCurrentNote() {
