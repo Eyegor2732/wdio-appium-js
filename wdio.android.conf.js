@@ -10,7 +10,7 @@ const config = {
   ...baseConfig,
   // Keep WDIO host and Appium service address identical to avoid connection mismatches.
   hostname: '127.0.0.1',
-  maxInstances: 2,
+  maxInstances: 1,
   specs: ['./test/specs/android/*.js'],
   exclude: isCI ? ['./test/specs/android/webview.spec.js'] : [],
   capabilities: [

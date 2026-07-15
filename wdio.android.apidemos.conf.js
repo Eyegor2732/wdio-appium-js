@@ -8,7 +8,7 @@ const androidPlatformVersion = process.env.ANDROID_PLATFORM_VERSION || (!isCI ? 
 const config = {
   ...baseConfig,
   hostname: '127.0.0.1',
-  maxInstances: 2,
+  maxInstances: 1,
   specs: ['./test/specs/apidemos/*.js'],
   capabilities: [
     {
