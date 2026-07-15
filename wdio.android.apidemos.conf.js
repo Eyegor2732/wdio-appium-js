@@ -8,7 +8,7 @@ const androidPlatformVersion = process.env.ANDROID_PLATFORM_VERSION || (!isCI ? 
 const config = {
   ...baseConfig,
   hostname: '127.0.0.1',
-  maxInstances: 1,
+  maxInstances: 2,
   specs: ['./test/specs/apidemos/*.js'],
   capabilities: [
     {
@@ -34,7 +34,7 @@ const config = {
       {
         args: {
           address: '127.0.0.1',
-          port: 4724,
+          port: 4723,
           relaxedSecurity: true
         },
         logPath: './appium-logs'
