@@ -28,7 +28,7 @@ const config = {
       'appium:chromedriverExecutable': path.join(process.cwd(), 'node_modules/chromedriver/lib/chromedriver/chromedriver'),
       'appium:ensureWebviewsHavePages': true,
       'appium:nativeWebScreenshot': true,
-      'appium:webviewContext': true
+      'appium:webviewContext': false
     }
   ],
   services: [
